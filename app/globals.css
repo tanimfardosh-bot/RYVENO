@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "ManropeLocal";
+  src: url("/fonts/Manrope.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-sans: "ManropeLocal", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "ManropeLocal", "Helvetica Neue", Arial, sans-serif;
+  --ink: #111111;
+  --sand: #b69a72;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #ffffff;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: #111111; color: #ffffff; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #f7f7f5; }
+::-webkit-scrollbar-thumb { background: #c9c9c5; border: 2px solid #f7f7f5; }
+::-webkit-scrollbar-thumb:hover { background: #b69a72; }
+
+@layer components {
+  .site-container {
+    @apply mx-auto w-full max-w-site px-5 sm:px-8 lg:px-12;
+  }
+
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-wide2 text-sand;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 border px-7 py-3.5 text-[11px] font-bold uppercase tracking-wide2 transition-all duration-300 ease-out;
+  }
+
+  .btn-dark {
+    @apply btn border-ink bg-ink text-white hover:bg-transparent hover:text-ink;
+  }
+
+  .btn-light {
+    @apply btn border-white bg-white text-ink hover:bg-transparent hover:text-white;
+  }
+
+  .btn-outline {
+    @apply btn border-ink bg-transparent text-ink hover:bg-ink hover:text-white;
+  }
+
+  .btn-sand {
+    @apply btn border-sand bg-sand text-white hover:bg-transparent hover:text-sand;
+  }
+
+  .link-line {
+    @apply relative inline-block after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full;
+  }
+
+  .field {
+    @apply w-full border border-neutral-300 bg-white px-4 py-3.5 text-sm text-ink outline-none transition-colors placeholder:text-neutral-400 focus:border-ink;
+  }
+
+  .section-title {
+    @apply font-display text-3xl font-extrabold uppercase leading-[1.05] tracking-tight sm:text-4xl lg:text-[44px];
+  }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+/* Editorial reveal */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* Image hover */
+.img-hover { transition: transform .9s cubic-bezier(.22,1,.36,1); }
+.group:hover .img-hover { transform: scale(1.06); }
+
+/* Hero ken-burns */
+@keyframes kenburns { 0% { transform: scale(1.04); } 100% { transform: scale(1.12); } }
+.kenburns { animation: kenburns 14s ease-out alternate infinite; }
+
+/* Editorial hero slider */
+@keyframes heroZoom { from { transform: scale(1); } to { transform: scale(1.08); } }
+.hero-zoom { animation: heroZoom 7s ease-out forwards; }
+
+@keyframes heroInRight { from { opacity: 0; transform: translateX(56px); } to { opacity: 1; transform: none; } }
+@keyframes heroInLeft { from { opacity: 0; transform: translateX(-56px); } to { opacity: 1; transform: none; } }
+.hero-in-right { animation: heroInRight 1s cubic-bezier(.22,1,.36,1) both; }
+.hero-in-left { animation: heroInLeft 1s cubic-bezier(.22,1,.36,1) both; }
+
+@keyframes heroRise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+.hero-rise { animation: heroRise .85s cubic-bezier(.22,1,.36,1) both; }
+
+@keyframes heroProgress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.hero-progress { transform-origin: left center; animation: heroProgress 5s linear forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-zoom, .hero-in-right, .hero-in-left, .hero-rise, .hero-progress { animation: none !important; }
+}
+
+/* Announcement marquee */
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.ticker-track { display: flex; width: max-content; animation: ticker 30s linear infinite; }
+
+/* Mega menu */
+.mega-panel { animation: megaIn .28s cubic-bezier(.22,1,.36,1) both; }
+@keyframes megaIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+
+/* Drawer */
+.drawer-backdrop { animation: fadeIn .25s ease both; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Skeleton shimmer */
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+.skeleton { position: relative; overflow: hidden; background: #eee; }
+.skeleton::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255,255,255,.6), transparent); animation: shimmer 1.5s infinite; }
+
+/* Zoom lens on PDP */
+.zoom-lens { position: absolute; border: 1px solid rgba(255,255,255,.8); background: rgba(255,255,255,.25); pointer-events: none; }
+
+/* Range input accent */
+input[type="range"] { accent-color: #111111; }
+
+/* Star rating */
+.stars { color: #b69a72; letter-spacing: 2px; }
